@@ -2,12 +2,15 @@
 <html>
 
 <head>
-    <div class="text">
-      <h1>遊び場</h1>
-      <c>～自作ゲームなどのおきば～</c>
-    </div>
-  </div>
-  <style>
+   <style>
+   .overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+  }
+ 
     img {
       width: 100%;
     }
@@ -67,6 +70,14 @@
       position: relative;
     }
 
+    .overlay-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+    }
+
     .image-container .text {
       position: absolute;
       top: 50%;
@@ -84,6 +95,8 @@
 <body>
   <div class="image-container">
     <img src="1.jpg">
+  </div>
+  <div class="overlay-text"><h1>遊び場</h1></div>
   </div>
   <div class="tab-container">
     <div class="tab" onclick="switchPage('page1')">ホーム</div>
@@ -109,7 +122,9 @@
     <a href=https://unityroom.com/games/tonikaknero>https://unityroom.com/games/tonikaknero</a>
     <br>プレイデモ動画
     <br>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/4Jix28oHKAs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>    <br>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/4Jix28oHKAs" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe> <br>
     暗黒疾走
     <br>
     <a href="https://unityroom.com/games/ankokushissou">https://unityroom.com/games/ankokushissou</a>

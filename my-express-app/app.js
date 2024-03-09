@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
-app.use('/images', express.static(path.join(__dirname, 'images')));
+
 server.listen(3000, () => {
   console.log('listening on *:3000');
 });
