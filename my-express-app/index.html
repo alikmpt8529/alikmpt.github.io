@@ -2,15 +2,15 @@
 <html>
 
 <head>
-   <style>
-   .overlay-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-  }
- 
+  <style>
+    .overlay-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+    }
+
     img {
       width: 100%;
     }
@@ -78,6 +78,14 @@
       color: white;
     }
 
+    .counter {
+      background-color: black;
+      color: orange;
+      font-family: 'Digital-7', monospace;
+      /* デジタル風のフォント */
+      padding: 5px;
+    }
+
     .image-container .text {
       position: absolute;
       top: 50%;
@@ -90,13 +98,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Digital+7&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <div class="image-container">
     <img src="1.jpg">
   </div>
-  <div class="overlay-text"><h1>遊び場</h1></div>
+  <div class="overlay-text">
+    <h1>遊び場</h1>
+  </div>
   </div>
   <div class="tab-container">
     <div class="tab" onclick="switchPage('page1')">ホーム</div>
@@ -106,10 +117,12 @@
   </div>
   <div id="page1" class="page active">
     <h1>ようこそ</h1>
-    <p id="visitorCount"></p>
+    <p>あなたは <span id="count" class="counter">
+        <script>document.write((localStorage.getItem('visitCount') || 0).toString().padStart(7, '0'))</script>
+      </span>人目の訪問者です</p>
     ここはこれまでに開発したゲーム作品を展示したり、ブログ、privatterの紹介をしています。
     <br>
-    最終更新日：<span id="updateDate"></span>
+    <p>最終更新日: <span id="lastModified"></span></p>
   </div>
 
   <div id="page2" class="page">
@@ -167,18 +180,31 @@
       document.querySelector(`[onclick="switchPage('${pageId}')"]`).classList.add('active');
     }
     window.onload = function () {
-      const date = new Date(document.lastModified);
-      const dateString = date.getFullYear() + "/" + (date.getMonth() + 1).toString().padStart(2, '0') + "/" + date.getDate().toString().padStart(2, '0');
-      const timeString = date.getHours().toString().padStart(2, '0') + ":" + date.getMinutes().toString().padStart(2, '0') + ":" + date.getSeconds().toString().padStart(2, '0');
-      document.getElementById('updateDate').textContent = dateString + " " + timeString;
+      // ローカルストレージから訪問回数を取得
+      var count = localStorage.getItem('visitCount');
 
-    }
+      // 訪問回数がまだ記録されていない場合、0に設定
+      if (count === null) {
+        count = 0;
+      }
 
-    var socket = io();
+      // HTML要素に現在の訪問回数を表示
+      document.getElementById('count').textContent = count.toString().padStart(7, '0');
 
-    socket.on('visitorCount', function (count) {
-      document.getElementById('visitorCount').textContent = "あなたは" + count + "人目の訪問者です。";
-    });
+      // 訪問回数を1増やす
+      count++;
+
+      // 訪問回数をローカルストレージに保存
+      localStorage.setItem('visitCount', count);
+      var lastModified = new Date(document.lastModified);
+      var formattedLastModified = lastModified.getFullYear() + '/' +
+        ('0' + (lastModified.getMonth() + 1)).slice(-2) + '/' +
+        ('0' + lastModified.getDate()).slice(-2) + ' ' +
+        ('0' + lastModified.getHours()).slice(-2) + ':' +
+        ('0' + lastModified.getMinutes()).slice(-2) + ':' +
+        ('0' + lastModified.getSeconds()).slice(-2);
+      document.getElementById('lastModified').textContent = formattedLastModified;
+    };
   </script>
 </body>
 
