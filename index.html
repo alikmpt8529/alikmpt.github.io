@@ -118,9 +118,6 @@
   </div>
   <div id="page1" class="page active">
     <h1>ようこそ</h1>
-    <p>あなたは <span id="count" class="counter">
-        <script>document.write((localStorage.getItem('visitCount') || 0).toString().padStart(7, '0'))</script>
-      </span>人目の訪問者です</p>
     ここはこれまでに開発したゲーム作品を展示したり、ブログ、privatterの紹介をしています。
     <br>
     <p>最終更新日: <span id="lastModified"></span></p>
@@ -168,7 +165,7 @@
 
     ここは趣味の部屋です。作品に関係ないこと書いたり書かなかったりします。
   </div>
-  <script src="/socket.io/socket.io.js"></script>
+
   <script>
     function switchPage(pageId) {
       var pages = document.getElementsByClassName('page');
@@ -181,22 +178,7 @@
       document.querySelector(`[onclick="switchPage('${pageId}')"]`).classList.add('active');
     }
     window.onload = function () {
-      // ローカルストレージから訪問回数を取得
-      var count = localStorage.getItem('visitCount');
-
-      // 訪問回数がまだ記録されていない場合、0に設定
-      if (count === null) {
-        count = 0;
-      }
-
-      // HTML要素に現在の訪問回数を表示
-      document.getElementById('count').textContent = count.toString().padStart(7, '0');
-
-      // 訪問回数を1増やす
-      count++;
-
-      // 訪問回数をローカルストレージに保存
-      localStorage.setItem('visitCount', count);
+     
       var lastModified = new Date(document.lastModified);
       var formattedLastModified = lastModified.getFullYear() + '/' +
         ('0' + (lastModified.getMonth() + 1)).slice(-2) + '/' +
